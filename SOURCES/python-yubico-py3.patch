@@ -1,0 +1,22 @@
+From 7e6e424ed579c53a0767ba71eb47345ae1e472ca Mon Sep 17 00:00:00 2001
+From: minus <github@mnus.de>
+Date: Sat, 12 Mar 2016 12:18:44 +0100
+Subject: [PATCH] fixed Python 3 compatibility for Yubikey 4
+
+---
+ yubico/yubikey_4_usb_hid.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/yubico/yubikey_4_usb_hid.py b/yubico/yubikey_4_usb_hid.py
+index 31c6f5d..b44bb90 100644
+--- a/yubico/yubikey_4_usb_hid.py
++++ b/yubico/yubikey_4_usb_hid.py
+@@ -104,7 +104,7 @@ def _read_capabilities(self):
+         frame = yubikey_frame.YubiKeyFrame(command=SLOT.YK4_CAPABILITIES)
+         self._device._write(frame)
+         response = self._device._read_response()
+-        r_len = ord(response[0])
++        r_len = yubico_util.ord_byte(response[0])
+ 
+         # 1 byte length, 2 byte CRC.
+         if not yubico_util.validate_crc16(response[:r_len+3]):
